@@ -30,7 +30,7 @@ app.use(
 );
 app.use('/api/todos', todoRoutes);
 
-const PORT = 3000;
+const PORT = 5683;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

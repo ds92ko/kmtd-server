@@ -4,8 +4,10 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js",
-    "build": "babel src --out-dir dist --copy-files",
+    "build": "rm -rf dist && babel src --out-dir dist --copy-files",
     "start": "node dist/index.js",
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod",
     "format": "prettier --write ."
   },
   "author": "",

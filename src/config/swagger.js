@@ -10,7 +10,12 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:3000'
+      url: 'https://kmtd-server.vercel.app',
+      description: '운영 서버',
+    },
+    {
+      url: 'http://localhost:5683',
+      description: '개발 서버'
     }
   ]
 };

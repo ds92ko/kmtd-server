@@ -4,6 +4,8 @@
   "main": "src/app.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon --exec babel-node src/app.js",
+    "build": "NODE_ENV=production babel src --out-dir dist --copy-files",
+    "start": "NODE_ENV=production node dist/app.js",
     "format": "prettier --write ."
   },
   "author": "",

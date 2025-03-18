@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 import path from 'path';
 import swaggerJSDoc from 'swagger-jsdoc';
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+dotenv.config();
+
+const APP_URL = process.env.APP_URL || 'https://kmtd-server.vercel.app';
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -13,7 +15,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: process.env.APP_URL || 'https://kmtd-server.vercel.app'
+      url: APP_URL
     }
   ]
 };

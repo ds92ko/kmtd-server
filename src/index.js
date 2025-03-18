@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from '@/src/config/swagger.js';
 import todoRoutes from '@/src/routes/todos.js';
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+dotenv.config();
 
 const app = express();
 
@@ -26,7 +26,7 @@ app.use(
 );
 app.use('/api/todos', todoRoutes);
 
-const PORT = process.env.PORT || 5683;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

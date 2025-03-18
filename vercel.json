@@ -5,5 +5,9 @@
       "source": "/(.*)",
       "destination": "/src"
     }
-  ]
+  ],
+  "env": {
+    "PORT": 3000,
+    "APP_URL": "https://kmtd-server.vercel.app"
+  }
 }

@@ -11,9 +11,5 @@
       "src": "/(.*)",
       "dest": "/dist/index.js"
     }
-  ],
-  "env": {
-    "PORT": "8080",
-    "APP_URL": "https://kmtd-server.vercel.app"
-  }
+  ]
 }

@@ -13,7 +13,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: process.env.APP_URL
+      url: process.env.APP_URL || 'https://kmtd-server.vercel.app'
     }
   ]
 };

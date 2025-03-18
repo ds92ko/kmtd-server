@@ -1,6 +1,6 @@
 import express from 'express';
-import { validateRequest } from '@/src/middlewares/todos';
-import { handleGetTodos } from '@/src/controllers/todos';
+import { validateRequest } from '@/src/middlewares/todos.js';
+import { handleGetTodos } from '@/src/controllers/todos.js';
 
 const router = express.Router();
 

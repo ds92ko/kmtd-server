@@ -1,3 +1,4 @@
+import path from 'path';
 import swaggerJSDoc from 'swagger-jsdoc';
 
 const swaggerDefinition = {
@@ -16,7 +17,7 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  apis: ['../routes/todos.js']
+  apis: [path.join(__dirname, '../routes/todos.js')]
 };
 
 const swaggerSpec = swaggerJSDoc(options);

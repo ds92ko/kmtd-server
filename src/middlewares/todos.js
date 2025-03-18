@@ -1,4 +1,4 @@
-import { paramsMap } from '@/src/constants/params';
+import { paramsMap } from '@/src/constants/params.js';
 
 export const validateRequest = (req, res, next) => {
   const url = new URL(req.originalUrl, `http://${req.headers.host}`);

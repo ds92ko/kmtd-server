@@ -13,6 +13,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the KMTD API😎');
+});
+
 app.use(
   '/docs',
   swaggerUi.serve,

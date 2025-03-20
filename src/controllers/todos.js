@@ -1,4 +1,4 @@
-import { getTodos, getTodo, createTodo } from '@/src/services/todos.js';
+import { getTodos, getTodo, createTodo, deleteTodo } from '@/src/services/todos.js';
 
 export const handleGetTodos = async (req, res) => {
   try {
@@ -28,5 +28,15 @@ export const handleCreateTodo = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Error writing data');
+  }
+};
+
+export const handleDeleteTodo = async (req, res) => {
+  try {
+    await deleteTodo(req.params);
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error deleting data');
   }
 };

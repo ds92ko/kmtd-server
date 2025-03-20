@@ -30,5 +30,10 @@ export const validationRules = {
       required: true,
       length: { min: 1, max: 500 }
     }
+  },
+  'DELETE:/api/todos/{id}': {
+    id: {
+      required: true
+    }
   }
 };

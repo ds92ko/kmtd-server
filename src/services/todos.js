@@ -43,3 +43,11 @@ export const createTodo = async body => {
 
   return newTodo;
 };
+
+export const deleteTodo = async params => {
+  const { id } = params;
+  const todos = await readTodos();
+  const newTodos = todos.filter(todo => todo.id !== Number(id));
+
+  await writeTodos(newTodos);
+};

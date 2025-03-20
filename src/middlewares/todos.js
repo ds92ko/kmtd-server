@@ -4,7 +4,11 @@ export const validateRequest = (req, res, next) => {
   const url = new URL(req.originalUrl, `http://${req.headers.host}`);
   const pathname = url.pathname;
   const reqData =
-    req.method === 'GET' ? (!Object.keys(req.params).length ? req.query : req.params) : req.body;
+    req.method === 'DELETE' || req.method === 'GET'
+      ? !Object.keys(req.params).length
+        ? req.query
+        : req.params
+      : req.body;
   const pathnameKey = req.params.id
     ? pathname.split('/').slice(0, -1).concat('{id}').join('/')
     : pathname;

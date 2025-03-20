@@ -1,6 +1,11 @@
 import express from 'express';
 import { validateRequest } from '@/src/middlewares/todos.js';
-import { handleGetTodos, handleGetTodo, handleCreateTodo } from '@/src/controllers/todos.js';
+import {
+  handleGetTodos,
+  handleGetTodo,
+  handleCreateTodo,
+  handleDeleteTodo
+} from '@/src/controllers/todos.js';
 
 const router = express.Router();
 
@@ -215,5 +220,8 @@ router.get('/:id', validateRequest, handleGetTodo);
  *         description: 내부 서버 오류
  */
 router.post('/', validateRequest, handleCreateTodo);
+
+// TODO: swagger 문서 작성
+router.delete('/:id', validateRequest, handleDeleteTodo);
 
 export default router;

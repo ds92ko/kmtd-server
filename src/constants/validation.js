@@ -1,5 +1,5 @@
 export const validationRules = {
-  '/api/todos': {
+  'GET:/api/todos': {
     status: {
       required: false,
       enum: ['complete', 'incomplete']
@@ -16,12 +16,12 @@ export const validationRules = {
       required: false
     }
   },
-  '/api/todos/:id': {
+  'GET:/api/todos/{id}': {
     id: {
       required: true
     }
   },
-  '/api/todos/add': {
+  'POST:/api/todos': {
     title: {
       required: true,
       length: { min: 1, max: 50 }

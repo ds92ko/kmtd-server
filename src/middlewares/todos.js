@@ -5,7 +5,10 @@ export const validateRequest = (req, res, next) => {
   const pathname = url.pathname;
   const reqData =
     req.method === 'GET' ? (!Object.keys(req.params).length ? req.query : req.params) : req.body;
-  const key = req.params.id ? pathname.split('/').slice(0, -1).concat(':id').join('/') : pathname;
+  const pathnameKey = req.params.id
+    ? pathname.split('/').slice(0, -1).concat('{id}').join('/')
+    : pathname;
+  const key = `${req.method}:${pathnameKey}`;
   const errors = Object.entries(validationRules[key]).reduce((acc, [key, rules]) => {
     const reqDataValue = reqData[key];
 

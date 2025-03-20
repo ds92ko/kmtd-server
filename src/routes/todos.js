@@ -149,7 +149,7 @@ router.get('/:id', validateRequest, handleGetTodo);
 
 /**
  * @swagger
- * /api/todos/add:
+ * /api/todos:
  *   post:
  *     summary: TODO 추가
  *     description: 제목/내용으로 구성된 TODO 추가하기
@@ -214,6 +214,6 @@ router.get('/:id', validateRequest, handleGetTodo);
  *       500:
  *         description: 내부 서버 오류
  */
-router.post('/add', validateRequest, handleCreateTodo);
+router.post('/', validateRequest, handleCreateTodo);
 
 export default router;

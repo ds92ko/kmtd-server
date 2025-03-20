@@ -14,5 +14,8 @@ export const handleCreateTodo = async (req, res) => {
   try {
     const todo = await createTodo(req.body);
     res.status(201).json(todo);
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error reading data');
+  }
 };

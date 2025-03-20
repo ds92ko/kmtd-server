@@ -1,6 +1,6 @@
 import express from 'express';
 import { validateRequest } from '@/src/middlewares/todos.js';
-import { handleGetTodos } from '@/src/controllers/todos.js';
+import { handleGetTodos, handleCreateTodo } from '@/src/controllers/todos.js';
 
 const router = express.Router();
 
@@ -92,5 +92,74 @@ const router = express.Router();
  *         description: 내부 서버 오류
  */
 router.get('/', validateRequest, handleGetTodos);
+
+/**
+ * @swagger
+ * /api/todos/add:
+ *   post:
+ *     summary: TODO 추가
+ *     description: 제목/내용으로 구성된 TODO 추가하기
+ *     tags:
+ *       - todos
+ *     operationId: create-todo
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: |
+ *                   TODO 제목<br/>
+ *                   최소 1자 / 최대 50자
+ *               content:
+ *                 type: string
+ *                 description: |
+ *                   TODO 내용<br/>
+ *                   최소 1자 / 최대 500자
+ *             required:
+ *               - title
+ *               - content
+ *     responses:
+ *       201:
+ *         description: 추가한 TODO 반환
+ *         content:
+ *           application/json:
+ *             schema:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: integer
+ *                    description: 고유 ID
+ *                  title:
+ *                    type: string
+ *                    description: 요청한 제목
+ *                  content:
+ *                    type: string
+ *                    description: 요청한 내용
+ *                  is_completed:
+ *                    type: boolean
+ *                    description:
+ *                      완료 여부<br/>
+ *                      추가일 경우 항상 false
+ *                  completed_at:
+ *                    type: string
+ *                    format: date-time
+ *                    nullable: true
+ *                    description:
+ *                      완료 일시<br/>
+ *                      추가일 경우 항상 null
+ *                  created_at:
+ *                    type: string
+ *                    format: date-time
+ *                    description: 요청한 일시
+ *       400:
+ *         description: 잘못된 쿼리 파라미터
+ *       500:
+ *         description: 내부 서버 오류
+ */
+router.post('/add', validateRequest, handleCreateTodo);
 
 export default router;

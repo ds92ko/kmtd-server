@@ -18,10 +18,12 @@ export const paramsMap = {
   },
   '/api/todos/add': {
     title: {
-      required: true
+      required: true,
+      length: { min: 1, max: 50 }
     },
     content: {
-      required: true
+      required: true,
+      length: { min: 1, max: 500 }
     }
   }
 };

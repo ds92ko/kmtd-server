@@ -10,6 +10,12 @@ export const validateRequest = (req, res, next) => {
     if (rules.required && !param) acc[key] = `${key} is required`;
     if (param && rules.enum && !rules.enum.includes(param))
       acc[key] = `${key} must be one of ${rules.enum.join(', ')}`;
+    if (param && rules.length) {
+      const { min, max } = rules.length;
+
+      if (param.length < min || param.length > max)
+        acc[key] = `${key} must be between ${min} and ${max} characters`;
+    }
 
     return acc;
   }, {});

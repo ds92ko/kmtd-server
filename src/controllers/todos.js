@@ -16,6 +16,6 @@ export const handleCreateTodo = async (req, res) => {
     res.status(201).json(todo);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error reading data');
+    res.status(500).send('Error writing data');
   }
 };

@@ -21,8 +21,9 @@ export const getTodos = async query => {
 
 export const createTodo = async body => {
   const todos = await readTodos();
+  const id = todos.length === 0 ? 1 : Math.max(...todos.map(todo => todo.id)) + 1;
   const newTodo = {
-    id: todos[todos.length - 1].id + 1,
+    id,
     ...body,
     is_completed: false,
     completed_at: null,

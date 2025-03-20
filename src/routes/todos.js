@@ -93,6 +93,58 @@ const router = express.Router();
  */
 router.get('/', validateRequest, handleGetTodos);
 
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   get:
+ *     summary: TODO 상세 조회
+ *     description: TODO 고유 ID로 TODO 상세 가져오기
+ *     tags:
+ *       - todos
+ *     operationId: get-todo
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: TODO 고유 ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 요청에 대한 TODO 상세 반환
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: 고유 ID
+ *                 title:
+ *                   type: string
+ *                   description: 제목
+ *                 content:
+ *                   type: string
+ *                   description: 내용
+ *                 is_completed:
+ *                   type: boolean
+ *                   description: 완료 여부
+ *                 completed_at:
+ *                   type: string
+ *                   format: date-time
+ *                   nullable: true
+ *                   description:
+ *                     완료 일시<br/>
+ *                     is_completed가 true일 경우 date-time, false일 경우 null
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: 생성 일시
+ *       404:
+ *         description: 해당 TODO를 찾을 수 없음
+ *       500:
+ *         description: 내부 서버 오류
+ */
 router.get('/:id', validateRequest, handleGetTodo);
 
 /**

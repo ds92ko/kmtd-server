@@ -1,6 +1,6 @@
 import express from 'express';
 import { validateRequest } from '@/src/middlewares/todos.js';
-import { handleGetTodos, handleCreateTodo } from '@/src/controllers/todos.js';
+import { handleGetTodos, handleGetTodo, handleCreateTodo } from '@/src/controllers/todos.js';
 
 const router = express.Router();
 
@@ -92,6 +92,8 @@ const router = express.Router();
  *         description: 내부 서버 오류
  */
 router.get('/', validateRequest, handleGetTodos);
+
+router.get('/:id', validateRequest, handleGetTodo);
 
 /**
  * @swagger

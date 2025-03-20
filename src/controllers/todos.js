@@ -1,9 +1,20 @@
-import { getTodos, createTodo } from '@/src/services/todos.js';
+import { getTodos, getTodo, createTodo } from '@/src/services/todos.js';
 
 export const handleGetTodos = async (req, res) => {
   try {
     const todos = await getTodos(req.query);
     res.json(todos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error reading data');
+  }
+};
+
+export const handleGetTodo = async (req, res) => {
+  try {
+    const todo = await getTodo(req.params);
+    if (!todo) return res.status(404).json({ error: 'Todo not found' });
+    res.json(todo);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error reading data');

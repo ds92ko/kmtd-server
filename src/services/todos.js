@@ -19,6 +19,13 @@ export const getTodos = async query => {
     });
 };
 
+export const getTodo = async params => {
+  const { id } = params;
+  const todos = await readTodos();
+
+  return todos.find(todo => todo.id === Number(id));
+};
+
 export const createTodo = async body => {
   const todos = await readTodos();
   const id = todos.length === 0 ? 1 : Math.max(...todos.map(todo => todo.id)) + 1;

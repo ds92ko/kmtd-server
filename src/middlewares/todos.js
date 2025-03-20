@@ -1,19 +1,21 @@
-import { paramsMap } from '@/src/constants/params.js';
+import { validationRules } from '@/src/constants/validation.js';
 
 export const validateRequest = (req, res, next) => {
   const url = new URL(req.originalUrl, `http://${req.headers.host}`);
   const pathname = url.pathname;
-  const params = req.method === 'GET' ? req.query : req.body;
-  const errors = Object.entries(paramsMap[pathname]).reduce((acc, [key, rules]) => {
-    const param = params[key];
+  const reqData =
+    req.method === 'GET' ? (!Object.keys(req.params).length ? req.query : req.params) : req.body;
+  const key = req.params.id ? pathname.split('/').slice(0, -1).concat(':id').join('/') : pathname;
+  const errors = Object.entries(validationRules[key]).reduce((acc, [key, rules]) => {
+    const reqDataValue = reqData[key];
 
-    if (rules.required && !param) acc[key] = `${key} is required`;
-    if (param && rules.enum && !rules.enum.includes(param))
+    if (rules.required && !reqDataValue) acc[key] = `${key} is required`;
+    if (reqDataValue && rules.enum && !rules.enum.includes(reqDataValue))
       acc[key] = `${key} must be one of ${rules.enum.join(', ')}`;
-    if (param && rules.length) {
+    if (reqDataValue && rules.length) {
       const { min, max } = rules.length;
 
-      if (param.length < min || param.length > max)
+      if (reqDataValue.length < min || reqDataValue.length > max)
         acc[key] = `${key} must be between ${min} and ${max} characters`;
     }
 

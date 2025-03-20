@@ -1,4 +1,4 @@
-export const paramsMap = {
+export const validationRules = {
   '/api/todos': {
     status: {
       required: false,
@@ -14,6 +14,11 @@ export const paramsMap = {
     },
     keyword: {
       required: false
+    }
+  },
+  '/api/todos/:id': {
+    id: {
+      required: true
     }
   },
   '/api/todos/add': {

@@ -17,7 +17,7 @@ const router = express.Router();
  *     summary: TODO 목록 조회
  *     description: 완료 상태 필터와 제목/내용 검색 및 등록일시 기준 정렬을 통한 TODO 목록 가져오기
  *     tags:
- *       - todos
+ *       - Todos
  *     operationId: get-todos
  *     parameters:
  *       - name: status
@@ -29,8 +29,7 @@ const router = express.Router();
  *           incomplete 완료되지 않은 TODO 목록 반환
  *         required: false
  *         schema:
- *           type: string
- *           enum: [complete, incomplete]
+ *           $ref: '#/components/schemas/TodoStatus'
  *       - name: sort
  *         in: query
  *         description:
@@ -40,8 +39,7 @@ const router = express.Router();
  *         required: true
  *         default: desc
  *         schema:
- *           type: string
- *           enum: [asc, desc]
+ *           $ref: '#/components/schemas/TodoSort'
  *       - name: type
  *         in: query
  *         description:
@@ -51,8 +49,7 @@ const router = express.Router();
  *         required: true
  *         default: title
  *         schema:
- *           type: string
- *           enum: [title, content]
+ *           $ref: '#/components/schemas/TodoSearchType'
  *       - name: keyword
  *         in: query
  *         description: 필드(type)에 대한 검색 키워드
@@ -65,33 +62,7 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                     description: 고유 ID
- *                   title:
- *                     type: string
- *                     description: 제목
- *                   content:
- *                     type: string
- *                     description: 내용
- *                   is_completed:
- *                     type: boolean
- *                     description: 완료 여부
- *                   completed_at:
- *                     type: string
- *                     format: date-time
- *                     nullable: true
- *                     description:
- *                       완료 일시<br/>
- *                       is_completed가 true일 경우 date-time, false일 경우 null
- *                   created_at:
- *                     type: string
- *                     format: date-time
- *                     description: 생성 일시
+ *               $ref: '#/components/schemas/Todos'
  *       400:
  *         description: 요청 오류
  *       500:
@@ -106,7 +77,7 @@ router.get('/', validateRequest, handleGetTodos);
  *     summary: TODO 상세 조회
  *     description: TODO 고유 ID로 TODO 상세 가져오기
  *     tags:
- *       - todos
+ *       - Todos
  *     operationId: get-todo
  *     parameters:
  *       - name: id
@@ -114,38 +85,14 @@ router.get('/', validateRequest, handleGetTodos);
  *         description: TODO 고유 ID
  *         required: true
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/TodoId'
  *     responses:
  *       200:
  *         description: 요청에 대한 TODO 상세 반환
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                   description: 고유 ID
- *                 title:
- *                   type: string
- *                   description: 제목
- *                 content:
- *                   type: string
- *                   description: 내용
- *                 is_completed:
- *                   type: boolean
- *                   description: 완료 여부
- *                 completed_at:
- *                   type: string
- *                   format: date-time
- *                   nullable: true
- *                   description:
- *                     완료 일시<br/>
- *                     is_completed가 true일 경우 date-time, false일 경우 null
- *                 created_at:
- *                   type: string
- *                   format: date-time
- *                   description: 생성 일시
+ *               $ref: '#/components/schemas/Todo'
  *       404:
  *         description: 해당 TODO가 존재하지 않음
  *       500:
@@ -160,61 +107,21 @@ router.get('/:id', validateRequest, handleGetTodo);
  *     summary: TODO 추가
  *     description: 제목/내용으로 구성된 TODO 추가하기
  *     tags:
- *       - todos
+ *       - Todos
  *     operationId: create-todo
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *                 description: |
- *                   TODO 제목<br/>
- *                   최소 1자 / 최대 50자
- *               content:
- *                 type: string
- *                 description: |
- *                   TODO 내용<br/>
- *                   최소 1자 / 최대 500자
- *             required:
- *               - title
- *               - content
+ *             $ref: '#/components/schemas/AddableTodo'
  *     responses:
  *       201:
  *         description: 추가한 TODO 반환
  *         content:
  *           application/json:
  *             schema:
- *                type: object
- *                properties:
- *                  id:
- *                    type: integer
- *                    description: 고유 ID
- *                  title:
- *                    type: string
- *                    description: 요청한 제목
- *                  content:
- *                    type: string
- *                    description: 요청한 내용
- *                  is_completed:
- *                    type: boolean
- *                    description:
- *                      완료 여부<br/>
- *                      추가일 경우 항상 false
- *                  completed_at:
- *                    type: string
- *                    format: date-time
- *                    nullable: true
- *                    description:
- *                      완료 일시<br/>
- *                      추가일 경우 항상 null
- *                  created_at:
- *                    type: string
- *                    format: date-time
- *                    description: 요청한 일시
+ *               $ref: '#/components/schemas/Todo'
  *       400:
  *         description: 요청 오류
  *       500:
@@ -229,7 +136,7 @@ router.post('/', validateRequest, handleCreateTodo);
  *     summary: TODO 수정
  *     description: TODO 고유 ID로 TODO 제목/내용/완료 여부 수정하기
  *     tags:
- *       - todos
+ *       - Todos
  *     operationId: update-todo
  *     parameters:
  *       - name: id
@@ -237,62 +144,20 @@ router.post('/', validateRequest, handleCreateTodo);
  *         description: TODO 고유 ID
  *         required: true
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/TodoId'
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *                 description: |
- *                   TODO 제목<br/>
- *                   최소 1자 / 최대 50자
- *               content:
- *                 type: string
- *                 description: |
- *                   TODO 내용<br/>
- *                   최소 1자 / 최대 500자
- *               is_completed:
- *                 type: boolean
- *                 description: 완료 여부
- *             required:
- *               - title
- *               - content
- *               - is_completed
+ *             $ref: '#/components/schemas/EditableTodo'
  *     responses:
  *       200:
  *         description: 수정한 TODO 반환
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                   description: 고유 ID
- *                 title:
- *                   type: string
- *                   description: 제목
- *                 content:
- *                   type: string
- *                   description: 내용
- *                 is_completed:
- *                   type: boolean
- *                   description: 완료 여부
- *                 completed_at:
- *                   type: string
- *                   format: date-time
- *                   nullable: true
- *                   description:
- *                     완료 일시<br/>
- *                     is_completed가 true일 경우 date-time, false일 경우 null
- *                 created_at:
- *                   type: string
- *                   format: date-time
- *                   description: 생성 일시
+ *               $ref: '#/components/schemas/Todo'
  *       400:
  *         description: 요청 오류
  *       404:
@@ -309,7 +174,7 @@ router.put('/:id', validateRequest, handleUpdateTodo);
  *     summary: TODO 삭제
  *     description: TODO 고유 ID로 TODO 삭제하기
  *     tags:
- *       - todos
+ *       - Todos
  *     operationId: delete-todo
  *     parameters:
  *       - name: id
@@ -317,7 +182,7 @@ router.put('/:id', validateRequest, handleUpdateTodo);
  *         description: TODO 고유 ID
  *         required: true
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/TodoId'
  *     responses:
  *       204:
  *         description: 요청이 성공하였으며 반환할 컨텐츠가 없음

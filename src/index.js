@@ -18,14 +18,7 @@ app.use(
   '/docs',
   swaggerUi.serve,
   swaggerUi.setup(swaggerSpec, {
-    explorer: true, // Swagger UI에서 API 문서 탐색기 활성화
-    docExpansion: 'none', // API 문서를 기본적으로 펼치지 않음
-    operationsSorter: 'method', // API 메소드별로 정렬
-    filter: true, // 검색 기능 활성화
-    layout: 'BaseLayout', // 레이아웃 타입 (기본값은 'StandaloneLayout')
-    swaggerOptions: {
-      url: './config/swagger.json'
-    }
+    customSiteTitle: '고민 TODO API 문서'
   })
 );
 app.use('/api/todos', todoRoutes);

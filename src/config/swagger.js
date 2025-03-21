@@ -9,7 +9,8 @@ import {
   Todo,
   Todos,
   AddableTodo,
-  EditableTodo
+  EditableTodo,
+  TodoCount
 } from '@/src/schemas/todos';
 
 const definition = {
@@ -43,7 +44,8 @@ const definition = {
       Todo,
       Todos,
       AddableTodo,
-      EditableTodo
+      EditableTodo,
+      TodoCount
     }
   }
 };

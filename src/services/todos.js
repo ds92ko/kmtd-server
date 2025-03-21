@@ -26,6 +26,16 @@ export const getTodo = async params => {
   return todos.find(todo => todo.id === Number(id));
 };
 
+export const getTodoCount = async () => {
+  const todos = await readTodos();
+
+  return {
+    total: todos.length,
+    complete: !todos.length ? 0 : todos.filter(todo => todo.is_completed).length,
+    incomplete: !todos.length ? 0 : todos.filter(todo => !todo.is_completed).length
+  };
+};
+
 export const createTodo = async body => {
   const todos = await readTodos();
   const id = todos.length === 0 ? 1 : Math.max(...todos.map(todo => todo.id)) + 1;

@@ -3,6 +3,7 @@ import { validateRequest } from '@/src/middlewares/todos.js';
 import {
   handleGetTodos,
   handleGetTodo,
+  handleGetTodoCount,
   handleCreateTodo,
   handleUpdateTodo,
   handleDeleteTodo
@@ -69,6 +70,27 @@ const router = express.Router();
  *         description: 내부 서버 오류
  */
 router.get('/', validateRequest, handleGetTodos);
+
+/**
+ * @swagger
+ * /api/todos/count:
+ *   get:
+ *     summary: TODO 개수 조회
+ *     description: TODO의 완료 여부별 개수와 전체 개수 가져오기
+ *     tags:
+ *       - Todos
+ *     operationId: get-todo-count
+ *     responses:
+ *       200:
+ *         description: TODO의 완료, 미완료, 총 개수 반환
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TodoCount'
+ *       500:
+ *         description: 내부 서버 오류
+ */
+router.get('/count', handleGetTodoCount);
 
 /**
  * @swagger

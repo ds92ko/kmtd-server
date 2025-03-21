@@ -84,3 +84,14 @@ export const EditableTodo = {
   description:
     'TODO 수정 요청 시 필요한 항목\n\nPUT 요청일 경우 전부 필수\n\nPATCH 요청일 경우 수정할 항목만 포함'
 };
+
+export const TodoCount = {
+  type: 'object',
+  required: ['total', 'complete', 'incomplete'],
+  properties: {
+    total: { type: 'integer', description: '전체 TODO 개수' },
+    complete: { type: 'integer', description: '완료된 TODO 개수' },
+    incomplete: { type: 'integer', description: '완료되지 않은 TODO 개수' }
+  },
+  description: 'TODO 개수'
+};

@@ -1,4 +1,11 @@
-import { getTodos, getTodo, createTodo, updateTodo, deleteTodo } from '@/src/services/todos.js';
+import {
+  getTodos,
+  getTodo,
+  getTodoCount,
+  createTodo,
+  updateTodo,
+  deleteTodo
+} from '@/src/services/todos.js';
 
 export const handleGetTodos = async (req, res) => {
   try {
@@ -15,6 +22,16 @@ export const handleGetTodo = async (req, res) => {
     const todo = await getTodo(req.params);
     if (!todo) return res.status(404).json({ error: 'Todo not found' });
     res.json(todo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error reading data');
+  }
+};
+
+export const handleGetTodoCount = async (_, res) => {
+  try {
+    const count = await getTodoCount();
+    res.json(count);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error reading data');

@@ -1,39 +1,68 @@
 export const validationRules = {
   'GET:/api/todos': {
-    status: {
-      required: false,
-      enum: ['complete', 'incomplete']
-    },
-    sort: {
-      required: true,
-      enum: ['asc', 'desc']
-    },
-    type: {
-      required: true,
-      enum: ['title', 'content']
-    },
-    keyword: {
-      required: false
+    query: {
+      status: {
+        required: false,
+        enum: ['complete', 'incomplete']
+      },
+      sort: {
+        required: true,
+        enum: ['asc', 'desc']
+      },
+      type: {
+        required: true,
+        enum: ['title', 'content']
+      },
+      keyword: {
+        required: false
+      }
     }
   },
   'GET:/api/todos/{id}': {
-    id: {
-      required: true
+    params: {
+      id: {
+        required: true
+      }
     }
   },
   'POST:/api/todos': {
-    title: {
-      required: true,
-      length: { min: 1, max: 50 }
+    body: {
+      title: {
+        required: true,
+        length: { min: 1, max: 50 }
+      },
+      content: {
+        required: true,
+        length: { min: 1, max: 500 }
+      }
+    }
+  },
+  'PUT:/api/todos/{id}': {
+    params: {
+      id: {
+        required: true
+      }
     },
-    content: {
-      required: true,
-      length: { min: 1, max: 500 }
+    body: {
+      title: {
+        required: true,
+        length: { min: 1, max: 50 }
+      },
+      content: {
+        required: true,
+        length: { min: 1, max: 500 }
+      },
+      is_completed: {
+        required: true,
+        enum: [true, false]
+      }
     }
   },
   'DELETE:/api/todos/{id}': {
-    id: {
-      required: true
+    params: {
+      id: {
+        required: true
+      }
     }
   }
 };

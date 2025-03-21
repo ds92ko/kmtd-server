@@ -3,28 +3,34 @@ import { validationRules } from '@/src/constants/validation.js';
 export const validateRequest = (req, res, next) => {
   const url = new URL(req.originalUrl, `http://${req.headers.host}`);
   const pathname = url.pathname;
-  const reqData =
-    req.method === 'DELETE' || req.method === 'GET'
-      ? !Object.keys(req.params).length
-        ? req.query
-        : req.params
-      : req.body;
-  const pathnameKey = req.params.id
-    ? pathname.split('/').slice(0, -1).concat('{id}').join('/')
-    : pathname;
-  const key = `${req.method}:${pathnameKey}`;
-  const errors = Object.entries(validationRules[key]).reduce((acc, [key, rules]) => {
-    const reqDataValue = reqData[key];
+  const method = req.method;
+  const segments = pathname.split('/');
+  const normalizedPath = segments
+    .map(segment => (/^\d+$/.test(segment) ? '{id}' : segment))
+    .join('/');
+  const key = `${method}:${normalizedPath}`;
+  const rules = validationRules[key];
 
-    if (rules.required && !reqDataValue) acc[key] = `${key} is required`;
-    if (reqDataValue && rules.enum && !rules.enum.includes(reqDataValue))
-      acc[key] = `${key} must be one of ${rules.enum.join(', ')}`;
-    if (reqDataValue && rules.length) {
-      const { min, max } = rules.length;
+  if (!rules) return next();
 
-      if (reqDataValue.length < min || reqDataValue.length > max)
-        acc[key] = `${key} must be between ${min} and ${max} characters`;
-    }
+  const { query, params, body } = req;
+
+  const errors = Object.entries({ query, params, body }).reduce((acc, [key, values]) => {
+    if (!rules[key]) return acc;
+
+    Object.entries(rules[key]).forEach(([field, rule]) => {
+      const value = values[field];
+
+      if (rule.required && !value) acc[field] = `${field} is required`;
+      if (value && rule.enum && !rule.enum.includes(value))
+        acc[field] = `${field} must be one of ${rule.enum.join(', ')}`;
+      if (value && rule.length) {
+        const { min, max } = rule.length;
+
+        if (value.length < min || value.length > max)
+          acc[field] = `${field} must be between ${min} and ${max} characters`;
+      }
+    });
 
     return acc;
   }, {});

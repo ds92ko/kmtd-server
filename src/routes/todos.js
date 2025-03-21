@@ -133,11 +133,53 @@ router.post('/', validateRequest, handleCreateTodo);
  * @swagger
  * /api/todos/{id}:
  *   put:
- *     summary: TODO 수정
- *     description: TODO 고유 ID로 TODO 제목/내용/완료 여부 수정하기
+ *     summary: TODO 전체 수정
+ *     description: TODO 고유 ID로 TODO 제목/내용/완료 여부 전체 수정하기
  *     tags:
  *       - Todos
  *     operationId: update-todo
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: TODO 고유 ID
+ *         required: true
+ *         schema:
+ *           $ref: '#/components/schemas/TodoId'
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/EditableTodo'
+ *             required:
+ *               - title
+ *               - content
+ *               - is_completed
+ *     responses:
+ *       200:
+ *         description: 수정한 TODO 반환
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
+ *       400:
+ *         description: 요청 오류
+ *       404:
+ *         description: 해당 TODO가 존재하지 않음
+ *       500:
+ *         description: 내부 서버 오류
+ */
+router.put('/:id', validateRequest, handleUpdateTodo);
+
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   patch:
+ *     summary: TODO 일부 수정
+ *     description: TODO 고유 ID로 TODO 제목/내용/완료 여부 일부 수정하기
+ *     tags:
+ *       - Todos
+ *     operationId: update-todo-partial
  *     parameters:
  *       - name: id
  *         in: path
@@ -165,7 +207,7 @@ router.post('/', validateRequest, handleCreateTodo);
  *       500:
  *         description: 내부 서버 오류
  */
-router.put('/:id', validateRequest, handleUpdateTodo);
+router.patch('/:id', validateRequest, handleUpdateTodo);
 
 /**
  * @swagger

@@ -35,7 +35,7 @@ export const handleUpdateTodo = async (req, res) => {
   try {
     const todo = await getTodo(req.params);
     if (!todo) return res.status(404).json({ error: 'Todo not found' });
-    const updatedTodo = await updateTodo(req.params, req.body);
+    const updatedTodo = await updateTodo(req);
     res.json(updatedTodo);
   } catch (error) {
     console.error(error);

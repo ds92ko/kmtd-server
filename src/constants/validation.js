@@ -58,6 +58,24 @@ export const validationRules = {
       }
     }
   },
+  'PATCH:/api/todos/{id}': {
+    params: {
+      id: {
+        required: true
+      }
+    },
+    body: {
+      title: {
+        length: { min: 1, max: 50 }
+      },
+      content: {
+        length: { min: 1, max: 500 }
+      },
+      is_completed: {
+        enum: [true, false]
+      }
+    }
+  },
   'DELETE:/api/todos/{id}': {
     params: {
       id: {

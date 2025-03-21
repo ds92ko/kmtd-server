@@ -61,22 +61,26 @@ export const TodoId = {
 export const Todo = {
   type: 'object',
   required: ['id', 'title', 'content', 'is_completed', 'completed_at', 'created_at'],
-  properties: { id, title, content, is_completed, completed_at, created_at }
+  properties: { id, title, content, is_completed, completed_at, created_at },
+  description: 'TODO 항목'
 };
 
 export const Todos = {
   type: 'array',
-  items: Todo
+  items: Todo,
+  description: 'TODO 목록'
 };
 
 export const AddableTodo = {
   type: 'object',
   required: ['title', 'content'],
-  properties: { title, content }
+  properties: { title, content },
+  description: 'TODO 추가 요청 시 필요한 항목'
 };
 
 export const EditableTodo = {
   type: 'object',
-  required: ['title', 'content', 'is_completed'],
-  properties: { title, content, is_completed }
+  properties: { title, content, is_completed },
+  description:
+    'TODO 수정 요청 시 필요한 항목\n\nPUT 요청일 경우 전부 필수\n\nPATCH 요청일 경우 수정할 항목만 포함'
 };

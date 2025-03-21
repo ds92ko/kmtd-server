@@ -4,6 +4,7 @@ import {
   handleGetTodos,
   handleGetTodo,
   handleCreateTodo,
+  handleUpdateTodo,
   handleDeleteTodo
 } from '@/src/controllers/todos.js';
 
@@ -220,6 +221,8 @@ router.get('/:id', validateRequest, handleGetTodo);
  *         description: 내부 서버 오류
  */
 router.post('/', validateRequest, handleCreateTodo);
+
+router.put('/:id', validateRequest, handleUpdateTodo);
 
 /**
  * @swagger

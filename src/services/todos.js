@@ -44,6 +44,36 @@ export const createTodo = async body => {
   return newTodo;
 };
 
+export const updateTodo = async (params, body) => {
+  const { id } = params;
+  const { title, content, is_completed } = body;
+  const todos = await readTodos();
+  let updatedTodo;
+
+  const newTodos = todos.map(todo => {
+    if (todo.id === Number(id)) {
+      updatedTodo = {
+        ...todo,
+        title,
+        content,
+        is_completed,
+        completed_at:
+          todo.is_completed === is_completed
+            ? todo.completed_at
+            : is_completed
+              ? new Date(new Date().getTime() + 9 * 60 * 60 * 1000).toISOString()
+              : null
+      };
+      return updatedTodo;
+    }
+    return todo;
+  });
+
+  await writeTodos(newTodos);
+
+  return updatedTodo;
+};
+
 export const deleteTodo = async params => {
   const { id } = params;
   const todos = await readTodos();

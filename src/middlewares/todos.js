@@ -21,7 +21,7 @@ export const validateRequest = (req, res, next) => {
     Object.entries(rules[key]).forEach(([field, rule]) => {
       const value = values[field];
 
-      if (rule.required && !value) acc[field] = `${field} is required`;
+      if (rule.required && value !== false && !value) acc[field] = `${field} is required`;
       if (value && rule.enum && !rule.enum.includes(value))
         acc[field] = `${field} must be one of ${rule.enum.join(', ')}`;
       if (value && rule.length) {

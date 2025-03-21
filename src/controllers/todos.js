@@ -33,6 +33,8 @@ export const handleCreateTodo = async (req, res) => {
 
 export const handleDeleteTodo = async (req, res) => {
   try {
+    const todo = await getTodo(req.params);
+    if (!todo) return res.status(404).json({ error: 'Todo not found' });
     await deleteTodo(req.params);
     res.status(204).send();
   } catch (error) {

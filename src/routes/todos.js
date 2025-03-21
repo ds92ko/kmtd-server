@@ -146,7 +146,7 @@ router.get('/', validateRequest, handleGetTodos);
  *                   format: date-time
  *                   description: 생성 일시
  *       404:
- *         description: 해당 TODO를 찾을 수 없음
+ *         description: 해당 TODO가 존재하지 않음
  *       500:
  *         description: 내부 서버 오류
  */
@@ -221,7 +221,30 @@ router.get('/:id', validateRequest, handleGetTodo);
  */
 router.post('/', validateRequest, handleCreateTodo);
 
-// TODO: swagger 문서 작성
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   delete:
+ *     summary: TODO 삭제
+ *     description: TODO 고유 ID로 TODO 삭제하기
+ *     tags:
+ *       - todos
+ *     operationId: delete-todo
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: TODO 고유 ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: 요청이 성공하였으며 반환할 컨텐츠가 없음
+ *       404:
+ *         description: 해당 TODO가 존재하지 않음
+ *       500:
+ *         description: 내부 서버 오류
+ */
 router.delete('/:id', validateRequest, handleDeleteTodo);
 
 export default router;

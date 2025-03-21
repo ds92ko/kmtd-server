@@ -93,7 +93,7 @@ const router = express.Router();
  *                     format: date-time
  *                     description: 생성 일시
  *       400:
- *         description: 잘못된 쿼리 파라미터
+ *         description: 요청 오류
  *       500:
  *         description: 내부 서버 오류
  */
@@ -216,12 +216,90 @@ router.get('/:id', validateRequest, handleGetTodo);
  *                    format: date-time
  *                    description: 요청한 일시
  *       400:
- *         description: 잘못된 쿼리 파라미터
+ *         description: 요청 오류
  *       500:
  *         description: 내부 서버 오류
  */
 router.post('/', validateRequest, handleCreateTodo);
 
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   put:
+ *     summary: TODO 수정
+ *     description: TODO 고유 ID로 TODO 제목/내용/완료 여부 수정하기
+ *     tags:
+ *       - todos
+ *     operationId: update-todo
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: TODO 고유 ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: |
+ *                   TODO 제목<br/>
+ *                   최소 1자 / 최대 50자
+ *               content:
+ *                 type: string
+ *                 description: |
+ *                   TODO 내용<br/>
+ *                   최소 1자 / 최대 500자
+ *               is_completed:
+ *                 type: boolean
+ *                 description: 완료 여부
+ *             required:
+ *               - title
+ *               - content
+ *               - is_completed
+ *     responses:
+ *       200:
+ *         description: 수정한 TODO 반환
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: 고유 ID
+ *                 title:
+ *                   type: string
+ *                   description: 제목
+ *                 content:
+ *                   type: string
+ *                   description: 내용
+ *                 is_completed:
+ *                   type: boolean
+ *                   description: 완료 여부
+ *                 completed_at:
+ *                   type: string
+ *                   format: date-time
+ *                   nullable: true
+ *                   description:
+ *                     완료 일시<br/>
+ *                     is_completed가 true일 경우 date-time, false일 경우 null
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: 생성 일시
+ *       400:
+ *         description: 요청 오류
+ *       404:
+ *         description: 해당 TODO가 존재하지 않음
+ *       500:
+ *         description: 내부 서버 오류
+ */
 router.put('/:id', validateRequest, handleUpdateTodo);
 
 /**
